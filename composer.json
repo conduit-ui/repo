@@ -1,6 +1,6 @@
 {
-    "name": "conduit-ui/repos",
-    "description": "GitHub repositories management package built on conduit-ui/connector",
+    "name": "conduit-ui/repo",
+    "description": "Repository management for agents",
     "type": "library",
     "license": "MIT",
     "keywords": [
