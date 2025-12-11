@@ -320,7 +320,7 @@ composer analyse # Run static analysis
 
 ## Enterprise Support
 
-Managing governance for 500+ repositories? Contact [jordan.woop@partridge.rocks](mailto:jordan.woop@partridge.rocks) for enterprise solutions including:
+Managing governance for 500+ repositories? Contact [jordan@partridge.rocks](mailto:jordan@partridge.rocks) for enterprise solutions including:
 
 - Custom compliance reporting
 - Automated policy enforcement
