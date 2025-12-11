@@ -1,0 +1,69 @@
+{
+    "name": "conduit-ui/repos",
+    "description": "GitHub repositories management package built on conduit-ui/connector",
+    "type": "library",
+    "license": "MIT",
+    "keywords": [
+        "github",
+        "repositories",
+        "conduit-ui",
+        "laravel"
+    ],
+    "authors": [
+        {
+            "name": "Conduit UI",
+            "email": "hello@conduit-ui.com"
+        }
+    ],
+    "require": {
+        "php": "^8.2|^8.3|^8.4",
+        "illuminate/contracts": "^10.0|^11.0|^12.0",
+        "conduit-ui/connector": "^1.0",
+        "saloonphp/saloon": "^3.10",
+        "spatie/laravel-package-tools": "^1.16"
+    },
+    "require-dev": {
+        "laravel/pint": "^1.0",
+        "mockery/mockery": "^1.6",
+        "orchestra/testbench": "^8.0|^9.0",
+        "pestphp/pest": "^2.0|^3.0",
+        "pestphp/pest-plugin-laravel": "^2.0|^3.0",
+        "phpstan/phpstan": "^1.11",
+        "phpstan/phpstan-phpunit": "^1.4",
+        "larastan/larastan": "^2.9"
+    },
+    "autoload": {
+        "psr-4": {
+            "ConduitUI\\Repos\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "ConduitUI\\Repos\\Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/pest",
+        "test-coverage": "vendor/bin/pest --coverage",
+        "format": "vendor/bin/pint",
+        "analyse": "vendor/bin/phpstan analyse"
+    },
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "ConduitUI\\Repos\\ReposServiceProvider"
+            ],
+            "aliases": {
+                "Repos": "ConduitUI\\Repos\\Facades\\Repos"
+            }
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
