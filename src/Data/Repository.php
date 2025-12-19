@@ -5,10 +5,13 @@ declare(strict_types=1);
 namespace ConduitUI\Repos\Data;
 
 use ConduitUI\Repos\Contracts\RepositoryDataContract;
+use ConduitUI\Repos\Services\Repositories;
 use DateTimeImmutable;
 
-final readonly class Repository implements RepositoryDataContract
+final class Repository implements RepositoryDataContract
 {
+    protected array $pendingChanges = [];
+
     public function __construct(
         public int $id,
         public string $name,
@@ -100,5 +103,178 @@ final readonly class Repository implements RepositoryDataContract
             'license' => $this->license?->toArray(),
             'topics' => $this->topics,
         ];
+    }
+
+    // Chainable action methods
+
+    public function archive(): self
+    {
+        return $this->addPendingChange('archived', true);
+    }
+
+    public function unarchive(): self
+    {
+        return $this->addPendingChange('archived', false);
+    }
+
+    public function makePrivate(): self
+    {
+        return $this->addPendingChange('private', true);
+    }
+
+    public function makePublic(): self
+    {
+        return $this->addPendingChange('private', false);
+    }
+
+    public function transfer(string $newOwner): self
+    {
+        return $this->addPendingChange('new_owner', $newOwner);
+    }
+
+    public function rename(string $newName): self
+    {
+        return $this->addPendingChange('name', $newName);
+    }
+
+    public function enableWiki(): self
+    {
+        return $this->addPendingChange('has_wiki', true);
+    }
+
+    public function disableWiki(): self
+    {
+        return $this->addPendingChange('has_wiki', false);
+    }
+
+    public function enableIssues(): self
+    {
+        return $this->addPendingChange('has_issues', true);
+    }
+
+    public function disableIssues(): self
+    {
+        return $this->addPendingChange('has_issues', false);
+    }
+
+    public function enableProjects(): self
+    {
+        return $this->addPendingChange('has_projects', true);
+    }
+
+    public function disableProjects(): self
+    {
+        return $this->addPendingChange('has_projects', false);
+    }
+
+    public function enableDiscussions(): self
+    {
+        return $this->addPendingChange('has_discussions', true);
+    }
+
+    public function disableDiscussions(): self
+    {
+        return $this->addPendingChange('has_discussions', false);
+    }
+
+    public function setTopics(array $topics): self
+    {
+        return $this->addPendingChange('topics', $topics);
+    }
+
+    public function addTopic(string $topic): self
+    {
+        $currentTopics = $this->pendingChanges['topics'] ?? $this->topics;
+        $newTopics = array_unique([...$currentTopics, $topic]);
+
+        return $this->addPendingChange('topics', $newTopics);
+    }
+
+    public function removeTopic(string $topic): self
+    {
+        $currentTopics = $this->pendingChanges['topics'] ?? $this->topics;
+        $newTopics = array_values(array_filter($currentTopics, fn ($t) => $t !== $topic));
+
+        return $this->addPendingChange('topics', $newTopics);
+    }
+
+    public function setDefaultBranch(string $branch): self
+    {
+        return $this->addPendingChange('default_branch', $branch);
+    }
+
+    public function update(array $attributes): self
+    {
+        foreach ($attributes as $key => $value) {
+            $this->addPendingChange($key, $value);
+        }
+
+        return $this;
+    }
+
+    // Persistence methods
+
+    public function save(): self
+    {
+        if (empty($this->pendingChanges)) {
+            return $this;
+        }
+
+        /** @var Repository $updated */
+        $updated = app(Repositories::class)
+            ->update($this->fullName, $this->pendingChanges);
+
+        $this->pendingChanges = [];
+
+        return $updated;
+    }
+
+    public function refresh(): self
+    {
+        /** @var Repository $refreshed */
+        $refreshed = app(Repositories::class)->find($this->fullName);
+
+        return $refreshed;
+    }
+
+    public function delete(): bool
+    {
+        return app(Repositories::class)->delete($this->fullName);
+    }
+
+    // Helper methods
+
+    public function isPublic(): bool
+    {
+        return ! $this->private;
+    }
+
+    public function isPrivate(): bool
+    {
+        return $this->private;
+    }
+
+    public function isArchived(): bool
+    {
+        return $this->archived;
+    }
+
+    public function isFork(): bool
+    {
+        return $this->fork;
+    }
+
+    public function isDisabled(): bool
+    {
+        return $this->disabled;
+    }
+
+    // Internal state management
+
+    protected function addPendingChange(string $key, mixed $value): self
+    {
+        $this->pendingChanges[$key] = $value;
+
+        return $this;
     }
 }
