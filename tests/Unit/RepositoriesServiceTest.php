@@ -306,3 +306,74 @@ it('can create a query', function () {
 
     expect($query)->toBeInstanceOf(RepositoryQuery::class);
 });
+
+it('can create a branch query', function () {
+    $query = $this->service->branchQuery('owner/test-repo');
+
+    expect($query)->toBeInstanceOf(\ConduitUI\Repos\Services\BranchQuery::class);
+});
+
+it('can find a specific branch', function () {
+    $responseData = [
+        'name' => 'main',
+        'protected' => true,
+        'commit' => [
+            'sha' => 'abc123',
+            'url' => 'https://api.github.com/repos/owner/repo/commits/abc123',
+        ],
+    ];
+
+    $response = m::mock(Response::class);
+    $response->shouldReceive('json')->andReturn($responseData);
+
+    $this->connector
+        ->shouldReceive('get')
+        ->with('/repos/owner/test-repo/branches/main')
+        ->andReturn($response);
+
+    $branch = $this->service->findBranch('owner/test-repo', 'main');
+
+    expect($branch->name)->toBe('main');
+    expect($branch->protected)->toBeTrue();
+});
+
+it('can create a branch', function () {
+    $requestData = [
+        'ref' => 'refs/heads/feature-branch',
+        'sha' => 'abc123',
+    ];
+
+    $responseData = [
+        'ref' => 'refs/heads/feature-branch',
+        'object' => [
+            'sha' => 'abc123',
+            'url' => 'https://api.github.com/repos/owner/repo/git/commits/abc123',
+        ],
+    ];
+
+    $response = m::mock(Response::class);
+    $response->shouldReceive('json')->andReturn($responseData);
+
+    $this->connector
+        ->shouldReceive('post')
+        ->with('/repos/owner/test-repo/git/refs', $requestData)
+        ->andReturn($response);
+
+    $result = $this->service->createBranch('owner/test-repo', 'feature-branch', 'abc123');
+
+    expect($result)->toBeTrue();
+});
+
+it('can delete a branch', function () {
+    $response = m::mock(Response::class);
+    $response->shouldReceive('successful')->andReturn(true);
+
+    $this->connector
+        ->shouldReceive('delete')
+        ->with('/repos/owner/test-repo/git/refs/heads/feature-branch')
+        ->andReturn($response);
+
+    $result = $this->service->deleteBranch('owner/test-repo', 'feature-branch');
+
+    expect($result)->toBeTrue();
+});
