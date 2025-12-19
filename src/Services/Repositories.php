@@ -166,4 +166,14 @@ final class Repositories implements RepositoryContract
 
         return $response->successful();
     }
+
+    public function contentQuery(string $fullName): ContentQuery
+    {
+        return new ContentQuery($this->github, $fullName);
+    }
+
+    public function file(string $fullName, string $path): ContentQuery
+    {
+        return $this->contentQuery($fullName)->path($path);
+    }
 }

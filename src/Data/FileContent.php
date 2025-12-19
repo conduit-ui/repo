@@ -1,0 +1,110 @@
+<?php
+
+declare(strict_types=1);
+
+namespace ConduitUI\Repos\Data;
+
+final class FileContent
+{
+    public function __construct(
+        public string $name,
+        public string $path,
+        public string $sha,
+        public int $size,
+        public string $type,
+        public ?string $content = null,
+        public ?string $encoding = null,
+        public ?string $htmlUrl = null,
+        public ?string $downloadUrl = null,
+    ) {}
+
+    public static function fromArray(array $data): self
+    {
+        return new self(
+            name: $data['name'],
+            path: $data['path'],
+            sha: $data['sha'],
+            size: $data['size'],
+            type: $data['type'],
+            content: $data['content'] ?? null,
+            encoding: $data['encoding'] ?? null,
+            htmlUrl: $data['html_url'] ?? null,
+            downloadUrl: $data['download_url'] ?? null,
+        );
+    }
+
+    public function toArray(): array
+    {
+        return [
+            'name' => $this->name,
+            'path' => $this->path,
+            'sha' => $this->sha,
+            'size' => $this->size,
+            'type' => $this->type,
+            'content' => $this->content,
+            'encoding' => $this->encoding,
+            'html_url' => $this->htmlUrl,
+            'download_url' => $this->downloadUrl,
+        ];
+    }
+
+    public function decoded(): ?string
+    {
+        if ($this->content === null) {
+            return null;
+        }
+
+        if ($this->encoding === 'base64') {
+            return base64_decode($this->content, true) ?: null;
+        }
+
+        return $this->content;
+    }
+
+    public function json(): ?array
+    {
+        $decoded = $this->decoded();
+
+        if ($decoded === null) {
+            return null;
+        }
+
+        $result = json_decode($decoded, true);
+
+        return is_array($result) ? $result : null;
+    }
+
+    public function isFile(): bool
+    {
+        return $this->type === 'file';
+    }
+
+    public function isDirectory(): bool
+    {
+        return $this->type === 'dir';
+    }
+
+    public function isSymlink(): bool
+    {
+        return $this->type === 'symlink';
+    }
+
+    public function extension(): ?string
+    {
+        $parts = pathinfo($this->name);
+
+        return $parts['extension'] ?? null;
+    }
+
+    public function basename(): string
+    {
+        $parts = pathinfo($this->name);
+
+        return $parts['filename'] ?? $this->name;
+    }
+
+    public function dirname(): string
+    {
+        return dirname($this->path);
+    }
+}
