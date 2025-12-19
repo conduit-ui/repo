@@ -377,3 +377,125 @@ it('can delete a branch', function () {
 
     expect($result)->toBeTrue();
 });
+
+it('can create a content query', function () {
+    $query = $this->service->contentQuery('owner/test-repo');
+
+    expect($query)->toBeInstanceOf(\ConduitUI\Repos\Services\ContentQuery::class);
+});
+
+it('can get file contents', function () {
+    $responseData = [
+        'name' => 'README.md',
+        'path' => 'README.md',
+        'sha' => 'abc123',
+        'size' => 1024,
+        'type' => 'file',
+        'url' => 'https://api.github.com/repos/owner/repo/contents/README.md',
+        'content' => base64_encode('# README'),
+        'encoding' => 'base64',
+    ];
+
+    $response = m::mock(Response::class);
+    $response->shouldReceive('json')->andReturn($responseData);
+
+    $this->connector
+        ->shouldReceive('get')
+        ->with('/repos/owner/test-repo/contents/README.md', [])
+        ->andReturn($response);
+
+    $content = $this->service->contents('owner/test-repo', 'README.md');
+
+    expect($content->name)->toBe('README.md');
+    expect($content->type)->toBe('file');
+});
+
+it('can create a file', function () {
+    $requestData = [
+        'message' => 'Add file',
+        'content' => base64_encode('Content'),
+    ];
+
+    $responseData = [
+        'content' => [
+            'name' => 'file.txt',
+            'path' => 'file.txt',
+            'sha' => 'abc123',
+            'size' => 7,
+            'type' => 'file',
+            'url' => 'https://api.github.com/repos/owner/repo/contents/file.txt',
+        ],
+    ];
+
+    $response = m::mock(Response::class);
+    $response->shouldReceive('json')->andReturn($responseData);
+
+    $this->connector
+        ->shouldReceive('put')
+        ->with('/repos/owner/test-repo/contents/file.txt', $requestData)
+        ->andReturn($response);
+
+    $result = $this->service->createFile('owner/test-repo', 'file.txt', [
+        'content' => 'Content',
+        'message' => 'Add file',
+    ]);
+
+    expect($result['content']['name'])->toBe('file.txt');
+});
+
+it('can update a file', function () {
+    $requestData = [
+        'message' => 'Update file',
+        'content' => base64_encode('Updated'),
+        'sha' => 'abc123',
+    ];
+
+    $responseData = [
+        'content' => [
+            'name' => 'file.txt',
+            'path' => 'file.txt',
+            'sha' => 'def456',
+            'size' => 7,
+            'type' => 'file',
+            'url' => 'https://api.github.com/repos/owner/repo/contents/file.txt',
+        ],
+    ];
+
+    $response = m::mock(Response::class);
+    $response->shouldReceive('json')->andReturn($responseData);
+
+    $this->connector
+        ->shouldReceive('put')
+        ->with('/repos/owner/test-repo/contents/file.txt', $requestData)
+        ->andReturn($response);
+
+    $result = $this->service->updateFile('owner/test-repo', 'file.txt', [
+        'content' => 'Updated',
+        'sha' => 'abc123',
+        'message' => 'Update file',
+    ]);
+
+    expect($result['content']['sha'])->toBe('def456');
+});
+
+it('can delete a file', function () {
+    $requestData = [
+        'message' => 'Delete file',
+        'sha' => 'abc123',
+    ];
+
+    $response = m::mock(Response::class);
+    $response->shouldReceive('successful')->andReturn(true);
+
+    $this->connector
+        ->shouldReceive('delete')
+        ->with('/repos/owner/test-repo/contents/file.txt', $requestData)
+        ->andReturn($response);
+
+    $result = $this->service->deleteFile('owner/test-repo', 'file.txt', [
+        'sha' => 'abc123',
+        'message' => 'Delete file',
+    ]);
+
+    expect($result)->toBeTrue();
+});

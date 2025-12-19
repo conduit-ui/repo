@@ -140,4 +140,39 @@ final class Repositories implements RepositoryContract
 
         return (new BranchQuery($this->github, $owner, $repo))->delete($branchName);
     }
+
+    public function contentQuery(string $fullName): ContentQuery
+    {
+        [$owner, $repo] = explode('/', $fullName, 2);
+
+        return new ContentQuery($this->github, $owner, $repo);
+    }
+
+    public function contents(string $fullName, string $path): mixed
+    {
+        [$owner, $repo] = explode('/', $fullName, 2);
+
+        return (new ContentQuery($this->github, $owner, $repo))->get($path);
+    }
+
+    public function createFile(string $fullName, string $path, array $data): array
+    {
+        [$owner, $repo] = explode('/', $fullName, 2);
+
+        return (new ContentQuery($this->github, $owner, $repo))->create($path, $data);
+    }
+
+    public function updateFile(string $fullName, string $path, array $data): array
+    {
+        [$owner, $repo] = explode('/', $fullName, 2);
+
+        return (new ContentQuery($this->github, $owner, $repo))->update($path, $data);
+    }
+
+    public function deleteFile(string $fullName, string $path, array $data): bool
+    {
+        [$owner, $repo] = explode('/', $fullName, 2);
+
+        return (new ContentQuery($this->github, $owner, $repo))->delete($path, $data);
+    }
 }

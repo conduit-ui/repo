@@ -63,6 +63,51 @@ parameters:
 		-
 			message: "#^Call to an undefined method ConduitUi\\\\GitHubConnector\\\\Connector\\:\\:delete\\(\\)\\.$#"
 			count: 1
+			path: src/Services/ContentQuery.php
+
+		-
+			message: "#^Call to an undefined method ConduitUi\\\\GitHubConnector\\\\Connector\\:\\:get\\(\\)\\.$#"
+			count: 3
+			path: src/Services/ContentQuery.php
+
+		-
+			message: "#^Call to an undefined method ConduitUi\\\\GitHubConnector\\\\Connector\\:\\:put\\(\\)\\.$#"
+			count: 2
+			path: src/Services/ContentQuery.php
+
+		-
+			message: "#^Method ConduitUI\\\\Repos\\\\Services\\\\ContentQuery\\:\\:applyFilters\\(\\) has parameter \\$contents with generic class Illuminate\\\\Support\\\\Collection but does not specify its types\\: TKey, TValue$#"
+			count: 1
+			path: src/Services/ContentQuery.php
+
+		-
+			message: "#^Method ConduitUI\\\\Repos\\\\Services\\\\ContentQuery\\:\\:applyFilters\\(\\) return type with generic class Illuminate\\\\Support\\\\Collection does not specify its types\\: TKey, TValue$#"
+			count: 1
+			path: src/Services/ContentQuery.php
+
+		-
+			message: "#^Method ConduitUI\\\\Repos\\\\Services\\\\ContentQuery\\:\\:list\\(\\) return type with generic class Illuminate\\\\Support\\\\Collection does not specify its types\\: TKey, TValue$#"
+			count: 1
+			path: src/Services/ContentQuery.php
+
+		-
+			message: "#^Parameter \\#1 \\$callback of method Illuminate\\\\Support\\\\Collection\\<\\(int\\|string\\),mixed\\>\\:\\:filter\\(\\) expects \\(callable\\(mixed, int\\|string\\)\\: bool\\)\\|null, Closure\\(ConduitUI\\\\Repos\\\\Data\\\\Content\\)\\: bool given\\.$#"
+			count: 2
+			path: src/Services/ContentQuery.php
+
+		-
+			message: "#^Unable to resolve the template type TKey in call to function collect$#"
+			count: 1
+			path: src/Services/ContentQuery.php
+
+		-
+			message: "#^Unable to resolve the template type TValue in call to function collect$#"
+			count: 1
+			path: src/Services/ContentQuery.php
+
+		-
+			message: "#^Call to an undefined method ConduitUi\\\\GitHubConnector\\\\Connector\\:\\:delete\\(\\)\\.$#"
+			count: 1
 			path: src/Services/Repositories.php
 
 		-
@@ -161,23 +206,48 @@ parameters:
 			path: tests/Unit/BranchQueryTest.php
 
 		-
+			message: "#^Parameter \\#1 \\$string of function base64_encode expects string, string\\|false given\\.$#"
+			count: 1
+			path: tests/Unit/ContentDataTest.php
+
+		-
+			message: "#^Access to an undefined property PHPUnit\\\\Framework\\\\TestCase\\:\\:\\$connector\\.$#"
+			count: 19
+			path: tests/Unit/ContentQueryTest.php
+
+		-
+			message: "#^Access to an undefined property PHPUnit\\\\Framework\\\\TestCase\\:\\:\\$query\\.$#"
+			count: 19
+			path: tests/Unit/ContentQueryTest.php
+
+		-
+			message: "#^Call to an undefined method Mockery\\\\ExpectationInterface\\|Mockery\\\\HigherOrderMessage\\:\\:andReturn\\(\\)\\.$#"
+			count: 19
+			path: tests/Unit/ContentQueryTest.php
+
+		-
+			message: "#^Parameter \\#1 \\$github of class ConduitUI\\\\Repos\\\\Services\\\\ContentQuery constructor expects ConduitUi\\\\GitHubConnector\\\\Connector, Mockery\\\\MockInterface given\\.$#"
+			count: 1
+			path: tests/Unit/ContentQueryTest.php
+
+		-
 			message: "#^Access to an undefined property PHPUnit\\\\Framework\\\\TestCase\\:\\:\\$app\\.$#"
 			count: 4
 			path: tests/Unit/ReposServiceProviderTest.php
 
 		-
 			message: "#^Access to an undefined property PHPUnit\\\\Framework\\\\TestCase\\:\\:\\$connector\\.$#"
-			count: 15
+			count: 19
 			path: tests/Unit/RepositoriesServiceTest.php
 
 		-
 			message: "#^Access to an undefined property PHPUnit\\\\Framework\\\\TestCase\\:\\:\\$service\\.$#"
-			count: 20
+			count: 25
 			path: tests/Unit/RepositoriesServiceTest.php
 
 		-
 			message: "#^Call to an undefined method Mockery\\\\ExpectationInterface\\|Mockery\\\\HigherOrderMessage\\:\\:andReturn\\(\\)\\.$#"
-			count: 14
+			count: 18
 			path: tests/Unit/RepositoriesServiceTest.php
 
 		-
