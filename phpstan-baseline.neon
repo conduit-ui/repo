@@ -61,13 +61,53 @@ parameters:
 			path: src/Services/BranchQuery.php
 
 		-
-			message: "#^Call to an undefined method ConduitUi\\\\GitHubConnector\\\\Connector\\:\\:delete\\(\\)\\.$#"
+			message: "#^Call to an undefined method ConduitUi\\\\GitHubConnector\\\\Connector\\:\\:get\\(\\)\\.$#"
 			count: 1
+			path: src/Services/CollaboratorQuery.php
+
+		-
+			message: "#^Method ConduitUI\\\\Repos\\\\Services\\\\CollaboratorQuery\\:\\:applyClientSideFilters\\(\\) has parameter \\$collection with generic class Illuminate\\\\Support\\\\Collection but does not specify its types\\: TKey, TValue$#"
+			count: 1
+			path: src/Services/CollaboratorQuery.php
+
+		-
+			message: "#^Method ConduitUI\\\\Repos\\\\Services\\\\CollaboratorQuery\\:\\:applyClientSideFilters\\(\\) return type with generic class Illuminate\\\\Support\\\\Collection does not specify its types\\: TKey, TValue$#"
+			count: 1
+			path: src/Services/CollaboratorQuery.php
+
+		-
+			message: "#^Method ConduitUI\\\\Repos\\\\Services\\\\CollaboratorQuery\\:\\:first\\(\\) should return ConduitUI\\\\Repos\\\\Data\\\\Collaborator\\|null but returns mixed\\.$#"
+			count: 1
+			path: src/Services/CollaboratorQuery.php
+
+		-
+			message: "#^Method ConduitUI\\\\Repos\\\\Services\\\\CollaboratorQuery\\:\\:get\\(\\) return type with generic class Illuminate\\\\Support\\\\Collection does not specify its types\\: TKey, TValue$#"
+			count: 1
+			path: src/Services/CollaboratorQuery.php
+
+		-
+			message: "#^Parameter \\#1 \\$callback of method Illuminate\\\\Support\\\\Collection\\<\\(int\\|string\\),mixed\\>\\:\\:filter\\(\\) expects \\(callable\\(mixed, int\\|string\\)\\: bool\\)\\|null, Closure\\(ConduitUI\\\\Repos\\\\Data\\\\Collaborator\\)\\: bool given\\.$#"
+			count: 1
+			path: src/Services/CollaboratorQuery.php
+
+		-
+			message: "#^Unable to resolve the template type TKey in call to function collect$#"
+			count: 1
+			path: src/Services/CollaboratorQuery.php
+
+		-
+			message: "#^Unable to resolve the template type TValue in call to function collect$#"
+			count: 1
+			path: src/Services/CollaboratorQuery.php
+
+		-
+			message: "#^Call to an undefined method ConduitUi\\\\GitHubConnector\\\\Connector\\:\\:delete\\(\\)\\.$#"
+			count: 2
 			path: src/Services/Repositories.php
 
 		-
 			message: "#^Call to an undefined method ConduitUi\\\\GitHubConnector\\\\Connector\\:\\:get\\(\\)\\.$#"
-			count: 6
+			count: 7
 			path: src/Services/Repositories.php
 
 		-
@@ -77,6 +117,11 @@ parameters:
 
 		-
 			message: "#^Call to an undefined method ConduitUi\\\\GitHubConnector\\\\Connector\\:\\:post\\(\\)\\.$#"
+			count: 1
+			path: src/Services/Repositories.php
+
+		-
+			message: "#^Call to an undefined method ConduitUi\\\\GitHubConnector\\\\Connector\\:\\:put\\(\\)\\.$#"
 			count: 1
 			path: src/Services/Repositories.php
 
@@ -141,6 +186,101 @@ parameters:
 			path: src/Services/RepositoryQuery.php
 
 		-
+			message: "#^Call to an undefined method ConduitUi\\\\GitHubConnector\\\\Connector\\:\\:delete\\(\\)\\.$#"
+			count: 1
+			path: src/Services/WebhookQuery.php
+
+		-
+			message: "#^Call to an undefined method ConduitUi\\\\GitHubConnector\\\\Connector\\:\\:get\\(\\)\\.$#"
+			count: 2
+			path: src/Services/WebhookQuery.php
+
+		-
+			message: "#^Call to an undefined method ConduitUi\\\\GitHubConnector\\\\Connector\\:\\:patch\\(\\)\\.$#"
+			count: 1
+			path: src/Services/WebhookQuery.php
+
+		-
+			message: "#^Call to an undefined method ConduitUi\\\\GitHubConnector\\\\Connector\\:\\:post\\(\\)\\.$#"
+			count: 3
+			path: src/Services/WebhookQuery.php
+
+		-
+			message: "#^Method ConduitUI\\\\Repos\\\\Services\\\\WebhookQuery\\:\\:applyFilters\\(\\) has parameter \\$collection with generic class Illuminate\\\\Support\\\\Collection but does not specify its types\\: TKey, TValue$#"
+			count: 1
+			path: src/Services/WebhookQuery.php
+
+		-
+			message: "#^Method ConduitUI\\\\Repos\\\\Services\\\\WebhookQuery\\:\\:applyFilters\\(\\) return type with generic class Illuminate\\\\Support\\\\Collection does not specify its types\\: TKey, TValue$#"
+			count: 1
+			path: src/Services/WebhookQuery.php
+
+		-
+			message: "#^Method ConduitUI\\\\Repos\\\\Services\\\\WebhookQuery\\:\\:get\\(\\) return type with generic class Illuminate\\\\Support\\\\Collection does not specify its types\\: TKey, TValue$#"
+			count: 1
+			path: src/Services/WebhookQuery.php
+
+		-
+			message: "#^Parameter \\#1 \\$callback of method Illuminate\\\\Support\\\\Collection\\<\\(int\\|string\\),mixed\\>\\:\\:filter\\(\\) expects \\(callable\\(mixed, int\\|string\\)\\: bool\\)\\|null, Closure\\(ConduitUI\\\\Repos\\\\Data\\\\Webhook\\)\\: bool given\\.$#"
+			count: 2
+			path: src/Services/WebhookQuery.php
+
+		-
+			message: "#^Unable to resolve the template type TKey in call to function collect$#"
+			count: 1
+			path: src/Services/WebhookQuery.php
+
+		-
+			message: "#^Unable to resolve the template type TValue in call to function collect$#"
+			count: 1
+			path: src/Services/WebhookQuery.php
+
+		-
+			message: "#^Call to an undefined method ConduitUi\\\\GitHubConnector\\\\Connector\\:\\:get\\(\\)\\.$#"
+			count: 4
+			path: src/Services/WorkflowQuery.php
+
+		-
+			message: "#^Call to an undefined method ConduitUi\\\\GitHubConnector\\\\Connector\\:\\:post\\(\\)\\.$#"
+			count: 3
+			path: src/Services/WorkflowQuery.php
+
+		-
+			message: "#^Method ConduitUI\\\\Repos\\\\Services\\\\WorkflowQuery\\:\\:applyWorkflowFilters\\(\\) has parameter \\$collection with generic class Illuminate\\\\Support\\\\Collection but does not specify its types\\: TKey, TValue$#"
+			count: 1
+			path: src/Services/WorkflowQuery.php
+
+		-
+			message: "#^Method ConduitUI\\\\Repos\\\\Services\\\\WorkflowQuery\\:\\:applyWorkflowFilters\\(\\) return type with generic class Illuminate\\\\Support\\\\Collection does not specify its types\\: TKey, TValue$#"
+			count: 1
+			path: src/Services/WorkflowQuery.php
+
+		-
+			message: "#^Method ConduitUI\\\\Repos\\\\Services\\\\WorkflowQuery\\:\\:get\\(\\) return type with generic class Illuminate\\\\Support\\\\Collection does not specify its types\\: TKey, TValue$#"
+			count: 1
+			path: src/Services/WorkflowQuery.php
+
+		-
+			message: "#^Method ConduitUI\\\\Repos\\\\Services\\\\WorkflowQuery\\:\\:getWorkflowRuns\\(\\) return type with generic class Illuminate\\\\Support\\\\Collection does not specify its types\\: TKey, TValue$#"
+			count: 1
+			path: src/Services/WorkflowQuery.php
+
+		-
+			message: "#^Parameter \\#1 \\$callback of method Illuminate\\\\Support\\\\Collection\\<\\(int\\|string\\),mixed\\>\\:\\:filter\\(\\) expects \\(callable\\(mixed, int\\|string\\)\\: bool\\)\\|null, Closure\\(ConduitUI\\\\Repos\\\\Data\\\\Workflow\\)\\: bool given\\.$#"
+			count: 1
+			path: src/Services/WorkflowQuery.php
+
+		-
+			message: "#^Unable to resolve the template type TKey in call to function collect$#"
+			count: 2
+			path: src/Services/WorkflowQuery.php
+
+		-
+			message: "#^Unable to resolve the template type TValue in call to function collect$#"
+			count: 2
+			path: src/Services/WorkflowQuery.php
+
+		-
 			message: "#^Access to an undefined property PHPUnit\\\\Framework\\\\TestCase\\:\\:\\$connector\\.$#"
 			count: 11
 			path: tests/Unit/BranchQueryTest.php
@@ -161,23 +301,43 @@ parameters:
 			path: tests/Unit/BranchQueryTest.php
 
 		-
+			message: "#^Access to an undefined property PHPUnit\\\\Framework\\\\TestCase\\:\\:\\$connector\\.$#"
+			count: 16
+			path: tests/Unit/CollaboratorQueryTest.php
+
+		-
+			message: "#^Access to an undefined property PHPUnit\\\\Framework\\\\TestCase\\:\\:\\$query\\.$#"
+			count: 16
+			path: tests/Unit/CollaboratorQueryTest.php
+
+		-
+			message: "#^Call to an undefined method Mockery\\\\ExpectationInterface\\|Mockery\\\\HigherOrderMessage\\:\\:andReturn\\(\\)\\.$#"
+			count: 15
+			path: tests/Unit/CollaboratorQueryTest.php
+
+		-
+			message: "#^Parameter \\#1 \\$github of class ConduitUI\\\\Repos\\\\Services\\\\CollaboratorQuery constructor expects ConduitUi\\\\GitHubConnector\\\\Connector, Mockery\\\\MockInterface given\\.$#"
+			count: 1
+			path: tests/Unit/CollaboratorQueryTest.php
+
+		-
 			message: "#^Access to an undefined property PHPUnit\\\\Framework\\\\TestCase\\:\\:\\$app\\.$#"
 			count: 4
 			path: tests/Unit/ReposServiceProviderTest.php
 
 		-
 			message: "#^Access to an undefined property PHPUnit\\\\Framework\\\\TestCase\\:\\:\\$connector\\.$#"
-			count: 15
-			path: tests/Unit/RepositoriesServiceTest.php
-
-		-
-			message: "#^Access to an undefined property PHPUnit\\\\Framework\\\\TestCase\\:\\:\\$service\\.$#"
 			count: 20
 			path: tests/Unit/RepositoriesServiceTest.php
 
 		-
+			message: "#^Access to an undefined property PHPUnit\\\\Framework\\\\TestCase\\:\\:\\$service\\.$#"
+			count: 26
+			path: tests/Unit/RepositoriesServiceTest.php
+
+		-
 			message: "#^Call to an undefined method Mockery\\\\ExpectationInterface\\|Mockery\\\\HigherOrderMessage\\:\\:andReturn\\(\\)\\.$#"
-			count: 14
+			count: 19
 			path: tests/Unit/RepositoriesServiceTest.php
 
 		-
@@ -207,6 +367,26 @@ parameters:
 
 		-
 			message: "#^Access to an undefined property PHPUnit\\\\Framework\\\\TestCase\\:\\:\\$connector\\.$#"
+			count: 8
+			path: tests/Unit/RepositoryModelTest.php
+
+		-
+			message: "#^Access to an undefined property PHPUnit\\\\Framework\\\\TestCase\\:\\:\\$repositories\\.$#"
+			count: 1
+			path: tests/Unit/RepositoryModelTest.php
+
+		-
+			message: "#^Call to an undefined method Mockery\\\\ExpectationInterface\\|Mockery\\\\HigherOrderMessage\\:\\:andReturn\\(\\)\\.$#"
+			count: 5
+			path: tests/Unit/RepositoryModelTest.php
+
+		-
+			message: "#^Parameter \\#1 \\$github of class ConduitUI\\\\Repos\\\\Services\\\\Repositories constructor expects ConduitUi\\\\GitHubConnector\\\\Connector, Mockery\\\\MockInterface given\\.$#"
+			count: 1
+			path: tests/Unit/RepositoryModelTest.php
+
+		-
+			message: "#^Access to an undefined property PHPUnit\\\\Framework\\\\TestCase\\:\\:\\$connector\\.$#"
 			count: 16
 			path: tests/Unit/RepositoryQueryTest.php
 
@@ -224,3 +404,43 @@ parameters:
 			message: "#^Parameter \\#1 \\$github of class ConduitUI\\\\Repos\\\\Services\\\\RepositoryQuery constructor expects ConduitUi\\\\GitHubConnector\\\\Connector, Mockery\\\\MockInterface given\\.$#"
 			count: 1
 			path: tests/Unit/RepositoryQueryTest.php
+
+		-
+			message: "#^Access to an undefined property PHPUnit\\\\Framework\\\\TestCase\\:\\:\\$connector\\.$#"
+			count: 13
+			path: tests/Unit/WebhookQueryTest.php
+
+		-
+			message: "#^Access to an undefined property PHPUnit\\\\Framework\\\\TestCase\\:\\:\\$query\\.$#"
+			count: 13
+			path: tests/Unit/WebhookQueryTest.php
+
+		-
+			message: "#^Call to an undefined method Mockery\\\\ExpectationInterface\\|Mockery\\\\HigherOrderMessage\\:\\:andReturn\\(\\)\\.$#"
+			count: 12
+			path: tests/Unit/WebhookQueryTest.php
+
+		-
+			message: "#^Parameter \\#1 \\$github of class ConduitUI\\\\Repos\\\\Services\\\\WebhookQuery constructor expects ConduitUi\\\\GitHubConnector\\\\Connector, Mockery\\\\MockInterface given\\.$#"
+			count: 1
+			path: tests/Unit/WebhookQueryTest.php
+
+		-
+			message: "#^Access to an undefined property PHPUnit\\\\Framework\\\\TestCase\\:\\:\\$connector\\.$#"
+			count: 15
+			path: tests/Unit/WorkflowQueryTest.php
+
+		-
+			message: "#^Access to an undefined property PHPUnit\\\\Framework\\\\TestCase\\:\\:\\$query\\.$#"
+			count: 15
+			path: tests/Unit/WorkflowQueryTest.php
+
+		-
+			message: "#^Call to an undefined method Mockery\\\\ExpectationInterface\\|Mockery\\\\HigherOrderMessage\\:\\:andReturn\\(\\)\\.$#"
+			count: 14
+			path: tests/Unit/WorkflowQueryTest.php
+
+		-
+			message: "#^Parameter \\#1 \\$github of class ConduitUI\\\\Repos\\\\Services\\\\WorkflowQuery constructor expects ConduitUi\\\\GitHubConnector\\\\Connector, Mockery\\\\MockInterface given\\.$#"
+			count: 1
+			path: tests/Unit/WorkflowQueryTest.php
