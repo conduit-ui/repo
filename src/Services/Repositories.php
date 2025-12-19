@@ -112,4 +112,32 @@ final class Repositories implements RepositoryContract
     {
         return new RepositoryQuery($this->github);
     }
+
+    public function branchQuery(string $fullName): BranchQuery
+    {
+        [$owner, $repo] = explode('/', $fullName, 2);
+
+        return new BranchQuery($this->github, $owner, $repo);
+    }
+
+    public function findBranch(string $fullName, string $branchName): Branch
+    {
+        [$owner, $repo] = explode('/', $fullName, 2);
+
+        return (new BranchQuery($this->github, $owner, $repo))->find($branchName);
+    }
+
+    public function createBranch(string $fullName, string $branchName, string $sha): bool
+    {
+        [$owner, $repo] = explode('/', $fullName, 2);
+
+        return (new BranchQuery($this->github, $owner, $repo))->create($branchName, $sha);
+    }
+
+    public function deleteBranch(string $fullName, string $branchName): bool
+    {
+        [$owner, $repo] = explode('/', $fullName, 2);
+
+        return (new BranchQuery($this->github, $owner, $repo))->delete($branchName);
+    }
 }
