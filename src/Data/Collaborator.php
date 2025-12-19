@@ -12,8 +12,7 @@ final readonly class Collaborator
         public string $avatarUrl,
         public string $htmlUrl,
         public Permissions $permissions,
-    ) {
-    }
+    ) {}
 
     public static function fromArray(array $data): self
     {

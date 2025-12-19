@@ -13,8 +13,7 @@ final readonly class ReleaseAsset
         public int $size,
         public int $downloadCount,
         public string $browserDownloadUrl,
-    ) {
-    }
+    ) {}
 
     public static function fromArray(array $data): self
     {

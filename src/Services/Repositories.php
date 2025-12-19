@@ -5,20 +5,21 @@ declare(strict_types=1);
 namespace ConduitUI\Repos\Services;
 
 use ConduitUi\GitHubConnector\Connector;
+use ConduitUI\Repos\Contracts\RepositoryContract;
+use ConduitUI\Repos\Contracts\RepositoryDataContract;
 use ConduitUI\Repos\Data\Branch;
 use ConduitUI\Repos\Data\Collaborator;
 use ConduitUI\Repos\Data\Release;
 use ConduitUI\Repos\Data\Repository;
 use Illuminate\Support\Collection;
 
-final class Repositories
+final class Repositories implements RepositoryContract
 {
     public function __construct(
         protected Connector $github,
-    ) {
-    }
+    ) {}
 
-    public function find(string $fullName): Repository
+    public function find(string $fullName): RepositoryDataContract
     {
         $response = $this->github->get("/repos/{$fullName}");
 
@@ -40,7 +41,7 @@ final class Repositories
         return $this->query();
     }
 
-    public function create(array $attributes): Repository
+    public function create(array $attributes): RepositoryDataContract
     {
         $endpoint = isset($attributes['org'])
             ? "/orgs/{$attributes['org']}/repos"
@@ -53,7 +54,7 @@ final class Repositories
         return Repository::fromArray($response->json());
     }
 
-    public function update(string $fullName, array $attributes): Repository
+    public function update(string $fullName, array $attributes): RepositoryDataContract
     {
         $response = $this->github->patch("/repos/{$fullName}", $attributes);
 

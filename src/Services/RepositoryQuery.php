@@ -28,8 +28,7 @@ final class RepositoryQuery
 
     public function __construct(
         protected Connector $github,
-    ) {
-    }
+    ) {}
 
     public function user(string $username): self
     {

@@ -11,8 +11,7 @@ final readonly class License
         public string $name,
         public string $spdxId,
         public ?string $url = null,
-    ) {
-    }
+    ) {}
 
     public static function fromArray(array $data): self
     {

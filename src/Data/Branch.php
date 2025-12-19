@@ -10,8 +10,7 @@ final readonly class Branch
         public string $name,
         public bool $protected,
         public Commit $commit,
-    ) {
-    }
+    ) {}
 
     public static function fromArray(array $data): self
     {

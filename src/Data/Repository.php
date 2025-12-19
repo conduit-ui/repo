@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 namespace ConduitUI\Repos\Data;
 
+use ConduitUI\Repos\Contracts\RepositoryDataContract;
 use DateTimeImmutable;
 
-final readonly class Repository
+final readonly class Repository implements RepositoryDataContract
 {
     public function __construct(
         public int $id,
@@ -35,8 +36,7 @@ final readonly class Repository
         public ?Owner $owner = null,
         public ?License $license = null,
         public array $topics = [],
-    ) {
-    }
+    ) {}
 
     public static function fromArray(array $data): self
     {

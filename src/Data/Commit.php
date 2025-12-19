@@ -9,8 +9,7 @@ final readonly class Commit
     public function __construct(
         public string $sha,
         public string $url,
-    ) {
-    }
+    ) {}
 
     public static function fromArray(array $data): self
     {
