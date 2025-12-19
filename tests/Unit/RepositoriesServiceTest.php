@@ -377,3 +377,143 @@ it('can delete a branch', function () {
 
     expect($result)->toBeTrue();
 });
+
+it('can create a webhook query', function () {
+    $query = $this->service->webhooks('owner/test-repo');
+
+    expect($query)->toBeInstanceOf(\ConduitUI\Repos\Services\WebhookQuery::class);
+});
+
+it('can create a webhook', function () {
+    $config = [
+        'url' => 'https://example.com/webhook',
+        'events' => ['push'],
+        'active' => true,
+    ];
+
+    $responseData = [
+        'id' => 1,
+        'name' => 'web',
+        'events' => ['push'],
+        'active' => true,
+        'config' => [
+            'url' => 'https://example.com/webhook',
+            'content_type' => 'json',
+        ],
+    ];
+
+    $response = m::mock(Response::class);
+    $response->shouldReceive('json')->andReturn($responseData);
+
+    $this->connector
+        ->shouldReceive('post')
+        ->with('/repos/owner/test-repo/hooks', m::subset($config))
+        ->andReturn($response);
+
+    $webhook = $this->service->createWebhook('owner/test-repo', $config);
+
+    expect($webhook)->toBeInstanceOf(\ConduitUI\Repos\Data\Webhook::class);
+    expect($webhook->id)->toBe(1);
+});
+
+it('can delete a webhook', function () {
+    $response = m::mock(Response::class);
+    $response->shouldReceive('successful')->andReturn(true);
+
+    $this->connector
+        ->shouldReceive('delete')
+        ->with('/repos/owner/test-repo/hooks/1')
+        ->andReturn($response);
+
+    $result = $this->service->deleteWebhook('owner/test-repo', 1);
+
+    expect($result)->toBeTrue();
+});
+
+it('can create a workflow query', function () {
+    $query = $this->service->workflows('owner/test-repo');
+
+    expect($query)->toBeInstanceOf(\ConduitUI\Repos\Services\WorkflowQuery::class);
+});
+
+it('can get a workflow by id', function () {
+    $responseData = [
+        'id' => 1,
+        'name' => 'CI',
+        'path' => '.github/workflows/ci.yml',
+        'state' => 'active',
+    ];
+
+    $response = m::mock(Response::class);
+    $response->shouldReceive('json')->andReturn($responseData);
+
+    $this->connector
+        ->shouldReceive('get')
+        ->with('/repos/owner/test-repo/actions/workflows/1')
+        ->andReturn($response);
+
+    $workflow = $this->service->workflow('owner/test-repo', '1');
+
+    expect($workflow)->toBeInstanceOf(\ConduitUI\Repos\Data\Workflow::class);
+    expect($workflow->id)->toBe(1);
+});
+
+it('can get a workflow by filename', function () {
+    $responseData = [
+        'id' => 1,
+        'name' => 'CI',
+        'path' => '.github/workflows/ci.yml',
+        'state' => 'active',
+    ];
+
+    $response = m::mock(Response::class);
+    $response->shouldReceive('json')->andReturn($responseData);
+
+    $this->connector
+        ->shouldReceive('get')
+        ->with('/repos/owner/test-repo/actions/workflows/ci.yml')
+        ->andReturn($response);
+
+    $workflow = $this->service->workflow('owner/test-repo', 'ci.yml');
+
+    expect($workflow)->toBeInstanceOf(\ConduitUI\Repos\Data\Workflow::class);
+    expect($workflow->name)->toBe('CI');
+});
+
+it('can dispatch a workflow by id', function () {
+    $inputs = [
+        'ref' => 'main',
+        'inputs' => ['environment' => 'production'],
+    ];
+
+    $response = m::mock(Response::class);
+    $response->shouldReceive('successful')->andReturn(true);
+
+    $this->connector
+        ->shouldReceive('post')
+        ->with('/repos/owner/test-repo/actions/workflows/1/dispatches', $inputs)
+        ->andReturn($response);
+
+    $result = $this->service->dispatchWorkflow('owner/test-repo', '1', $inputs);
+
+    expect($result)->toBeTrue();
+});
+
+it('can dispatch a workflow by filename', function () {
+    $inputs = [
+        'ref' => 'main',
+        'inputs' => ['environment' => 'production'],
+    ];
+
+    $response = m::mock(Response::class);
+    $response->shouldReceive('successful')->andReturn(true);
+
+    $this->connector
+        ->shouldReceive('post')
+        ->with('/repos/owner/test-repo/actions/workflows/deploy.yml/dispatches', $inputs)
+        ->andReturn($response);
+
+    $result = $this->service->dispatchWorkflow('owner/test-repo', 'deploy.yml', $inputs);
+
+    expect($result)->toBeTrue();
+});

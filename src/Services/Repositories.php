@@ -11,6 +11,8 @@ use ConduitUI\Repos\Data\Branch;
 use ConduitUI\Repos\Data\Collaborator;
 use ConduitUI\Repos\Data\Release;
 use ConduitUI\Repos\Data\Repository;
+use ConduitUI\Repos\Data\Webhook;
+use ConduitUI\Repos\Data\Workflow;
 use Illuminate\Support\Collection;
 
 final class Repositories implements RepositoryContract
@@ -139,5 +141,55 @@ final class Repositories implements RepositoryContract
         [$owner, $repo] = explode('/', $fullName, 2);
 
         return (new BranchQuery($this->github, $owner, $repo))->delete($branchName);
+    }
+
+    public function webhooks(string $fullName): WebhookQuery
+    {
+        [$owner, $repo] = explode('/', $fullName, 2);
+
+        return new WebhookQuery($this->github, $owner, $repo);
+    }
+
+    public function createWebhook(string $fullName, array $config): Webhook
+    {
+        [$owner, $repo] = explode('/', $fullName, 2);
+
+        return (new WebhookQuery($this->github, $owner, $repo))->create($config);
+    }
+
+    public function deleteWebhook(string $fullName, int $webhookId): bool
+    {
+        [$owner, $repo] = explode('/', $fullName, 2);
+
+        return (new WebhookQuery($this->github, $owner, $repo))->delete($webhookId);
+    }
+
+    public function workflows(string $fullName): WorkflowQuery
+    {
+        [$owner, $repo] = explode('/', $fullName, 2);
+
+        return new WorkflowQuery($this->github, $owner, $repo);
+    }
+
+    public function workflow(string $fullName, string $workflowId): Workflow
+    {
+        [$owner, $repo] = explode('/', $fullName, 2);
+
+        $query = new WorkflowQuery($this->github, $owner, $repo);
+
+        return is_numeric($workflowId)
+            ? $query->find((int) $workflowId)
+            : $query->findByFilename($workflowId);
+    }
+
+    public function dispatchWorkflow(string $fullName, string $workflowId, array $inputs): bool
+    {
+        [$owner, $repo] = explode('/', $fullName, 2);
+
+        $query = new WorkflowQuery($this->github, $owner, $repo);
+
+        return is_numeric($workflowId)
+            ? $query->dispatch((int) $workflowId, $inputs)
+            : $query->dispatchByFilename($workflowId, $inputs);
     }
 }
