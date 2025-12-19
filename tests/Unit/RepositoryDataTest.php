@@ -79,6 +79,26 @@ it('can create owner from array', function () {
     expect($owner->type)->toBe('User');
 });
 
+it('can convert owner to array', function () {
+    $data = [
+        'id' => 2,
+        'login' => 'org-name',
+        'type' => 'Organization',
+        'avatar_url' => 'https://github.com/org-avatar.jpg',
+        'html_url' => 'https://github.com/org-name',
+    ];
+
+    $owner = Owner::fromArray($data);
+    $array = $owner->toArray();
+
+    expect($array)->toBeArray();
+    expect($array['id'])->toBe(2);
+    expect($array['login'])->toBe('org-name');
+    expect($array['type'])->toBe('Organization');
+    expect($array['avatar_url'])->toBe('https://github.com/org-avatar.jpg');
+    expect($array['html_url'])->toBe('https://github.com/org-name');
+});
+
 it('can create license from array', function () {
     $data = [
         'key' => 'mit',
@@ -92,4 +112,22 @@ it('can create license from array', function () {
     expect($license->key)->toBe('mit');
     expect($license->name)->toBe('MIT License');
     expect($license->spdxId)->toBe('MIT');
+});
+
+it('can convert license to array', function () {
+    $data = [
+        'key' => 'apache-2.0',
+        'name' => 'Apache License 2.0',
+        'spdx_id' => 'Apache-2.0',
+        'url' => 'https://api.github.com/licenses/apache-2.0',
+    ];
+
+    $license = License::fromArray($data);
+    $array = $license->toArray();
+
+    expect($array)->toBeArray();
+    expect($array['key'])->toBe('apache-2.0');
+    expect($array['name'])->toBe('Apache License 2.0');
+    expect($array['spdx_id'])->toBe('Apache-2.0');
+    expect($array['url'])->toBe('https://api.github.com/licenses/apache-2.0');
 });

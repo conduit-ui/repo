@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace ConduitUI\Repos;
 
-use ConduitUI\Connector\GitHub;
+use ConduitUi\GitHubConnector\Connector;
 use ConduitUI\Repos\Services\Repositories;
 use Illuminate\Support\ServiceProvider;
 
@@ -18,7 +18,7 @@ final class ReposServiceProvider extends ServiceProvider
         );
 
         $this->app->singleton(Repositories::class, function ($app) {
-            return new Repositories($app->make(GitHub::class));
+            return new Repositories($app->make(Connector::class));
         });
     }
 

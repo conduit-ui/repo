@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace ConduitUI\Repos\Services;
 
-use ConduitUI\Connector\GitHub;
+use ConduitUi\GitHubConnector\Connector;
 use ConduitUI\Repos\Data\Branch;
 use ConduitUI\Repos\Data\Collaborator;
 use ConduitUI\Repos\Data\Release;
@@ -14,7 +14,7 @@ use Illuminate\Support\Collection;
 final class Repositories
 {
     public function __construct(
-        protected GitHub $github,
+        protected Connector $github,
     ) {
     }
 

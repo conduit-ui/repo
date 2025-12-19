@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace ConduitUI\Repos\Services;
 
-use ConduitUI\Connector\GitHub;
+use ConduitUi\GitHubConnector\Connector;
 use ConduitUI\Repos\Data\Repository;
 use Illuminate\Support\Collection;
 
@@ -27,7 +27,7 @@ final class RepositoryQuery
     protected int $page = 1;
 
     public function __construct(
-        protected GitHub $github,
+        protected Connector $github,
     ) {
     }
 
