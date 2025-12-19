@@ -140,4 +140,30 @@ final class Repositories implements RepositoryContract
 
         return (new BranchQuery($this->github, $owner, $repo))->delete($branchName);
     }
+
+    public function collaboratorQuery(string $fullName): CollaboratorQuery
+    {
+        return new CollaboratorQuery($this->github, $fullName);
+    }
+
+    public function addCollaborator(string $fullName, string $username, array $options = []): bool
+    {
+        $response = $this->github->put("/repos/{$fullName}/collaborators/{$username}", $options);
+
+        return $response->successful();
+    }
+
+    public function removeCollaborator(string $fullName, string $username): bool
+    {
+        $response = $this->github->delete("/repos/{$fullName}/collaborators/{$username}");
+
+        return $response->successful();
+    }
+
+    public function checkCollaborator(string $fullName, string $username): bool
+    {
+        $response = $this->github->get("/repos/{$fullName}/collaborators/{$username}");
+
+        return $response->successful();
+    }
 }

@@ -167,19 +167,19 @@ final class RepositoryQuery
     {
         if ($this->language !== null) {
             $collection = $collection->filter(
-                fn (Repository $repo) => $repo->language === $this->language
+                fn (Repository $repo) => $repo->language === $this->language,
             );
         }
 
         if ($this->starsGreaterThan !== null) {
             $collection = $collection->filter(
-                fn (Repository $repo) => $repo->stargazersCount > $this->starsGreaterThan
+                fn (Repository $repo) => $repo->stargazersCount > $this->starsGreaterThan,
             );
         }
 
         if ($this->forksGreaterThan !== null) {
             $collection = $collection->filter(
-                fn (Repository $repo) => $repo->forksCount > $this->forksGreaterThan
+                fn (Repository $repo) => $repo->forksCount > $this->forksGreaterThan,
             );
         }
 
