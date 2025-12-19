@@ -166,4 +166,20 @@ final class Repositories implements RepositoryContract
 
         return $response->successful();
     }
+
+    public function getCollaboratorPermission(string $fullName, string $username): ?string
+    {
+        $response = $this->github->get("/repos/{$fullName}/collaborators/{$username}/permission");
+
+        return $response->json()['permission'] ?? null;
+    }
+
+    public function updateCollaboratorPermission(string $fullName, string $username, string $permission): bool
+    {
+        $response = $this->github->put("/repos/{$fullName}/collaborators/{$username}", [
+            'permission' => $permission,
+        ]);
+
+        return $response->successful();
+    }
 }

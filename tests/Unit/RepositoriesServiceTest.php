@@ -453,3 +453,39 @@ it('returns false when user is not a collaborator', function () {
 
     expect($result)->toBeFalse();
 });
+
+it('can get collaborator permission level', function () {
+    $responseData = [
+        'permission' => 'admin',
+        'user' => [
+            'login' => 'testuser',
+            'id' => 123,
+        ],
+    ];
+
+    $response = m::mock(Response::class);
+    $response->shouldReceive('json')->andReturn($responseData);
+
+    $this->connector
+        ->shouldReceive('get')
+        ->with('/repos/owner/test-repo/collaborators/testuser/permission')
+        ->andReturn($response);
+
+    $permission = $this->service->getCollaboratorPermission('owner/test-repo', 'testuser');
+
+    expect($permission)->toBe('admin');
+});
+
+it('can update collaborator permission', function () {
+    $response = m::mock(Response::class);
+    $response->shouldReceive('successful')->andReturn(true);
+
+    $this->connector
+        ->shouldReceive('put')
+        ->with('/repos/owner/test-repo/collaborators/testuser', ['permission' => 'maintain'])
+        ->andReturn($response);
+
+    $result = $this->service->updateCollaboratorPermission('owner/test-repo', 'testuser', 'maintain');
+
+    expect($result)->toBeTrue();
+});
