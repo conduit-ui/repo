@@ -119,3 +119,103 @@ it('can convert release to array', function () {
     expect($array['assets'])->toBeArray();
     expect($array['assets'])->toHaveCount(1);
 });
+
+it('can check if release is draft', function () {
+    $draftRelease = new Release(
+        id: 1,
+        tagName: 'v1.0.0',
+        name: 'Draft',
+        body: 'Draft notes',
+        draft: true,
+        prerelease: false,
+        createdAt: null,
+        publishedAt: null,
+        htmlUrl: 'https://github.com/owner/repo/releases/tag/v1.0.0',
+    );
+
+    $publishedRelease = new Release(
+        id: 2,
+        tagName: 'v2.0.0',
+        name: 'Published',
+        body: 'Published notes',
+        draft: false,
+        prerelease: false,
+        createdAt: new DateTimeImmutable,
+        publishedAt: new DateTimeImmutable,
+        htmlUrl: 'https://github.com/owner/repo/releases/tag/v2.0.0',
+    );
+
+    expect($draftRelease->isDraft())->toBeTrue();
+    expect($publishedRelease->isDraft())->toBeFalse();
+});
+
+it('can check if release is prerelease', function () {
+    $prerelease = new Release(
+        id: 1,
+        tagName: 'v1.0.0-beta',
+        name: 'Beta',
+        body: 'Beta notes',
+        draft: false,
+        prerelease: true,
+        createdAt: new DateTimeImmutable,
+        publishedAt: new DateTimeImmutable,
+        htmlUrl: 'https://github.com/owner/repo/releases/tag/v1.0.0-beta',
+    );
+
+    $stableRelease = new Release(
+        id: 2,
+        tagName: 'v2.0.0',
+        name: 'Stable',
+        body: 'Stable notes',
+        draft: false,
+        prerelease: false,
+        createdAt: new DateTimeImmutable,
+        publishedAt: new DateTimeImmutable,
+        htmlUrl: 'https://github.com/owner/repo/releases/tag/v2.0.0',
+    );
+
+    expect($prerelease->isPrerelease())->toBeTrue();
+    expect($stableRelease->isPrerelease())->toBeFalse();
+});
+
+it('can check if release is published', function () {
+    $publishedRelease = new Release(
+        id: 1,
+        tagName: 'v1.0.0',
+        name: 'Published',
+        body: 'Published notes',
+        draft: false,
+        prerelease: false,
+        createdAt: new DateTimeImmutable,
+        publishedAt: new DateTimeImmutable,
+        htmlUrl: 'https://github.com/owner/repo/releases/tag/v1.0.0',
+    );
+
+    $draftRelease = new Release(
+        id: 2,
+        tagName: 'v2.0.0',
+        name: 'Draft',
+        body: 'Draft notes',
+        draft: true,
+        prerelease: false,
+        createdAt: new DateTimeImmutable,
+        publishedAt: null,
+        htmlUrl: 'https://github.com/owner/repo/releases/tag/v2.0.0',
+    );
+
+    $notPublishedYet = new Release(
+        id: 3,
+        tagName: 'v3.0.0',
+        name: 'Not published',
+        body: 'Not published notes',
+        draft: false,
+        prerelease: false,
+        createdAt: new DateTimeImmutable,
+        publishedAt: null,
+        htmlUrl: 'https://github.com/owner/repo/releases/tag/v3.0.0',
+    );
+
+    expect($publishedRelease->isPublished())->toBeTrue();
+    expect($draftRelease->isPublished())->toBeFalse();
+    expect($notPublishedYet->isPublished())->toBeFalse();
+});

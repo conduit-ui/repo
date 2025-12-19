@@ -17,6 +17,26 @@ parameters:
 
 		-
 			message: "#^Call to an undefined method ConduitUi\\\\GitHubConnector\\\\Connector\\:\\:delete\\(\\)\\.$#"
+			count: 2
+			path: src/Data/Release.php
+
+		-
+			message: "#^Call to an undefined method ConduitUi\\\\GitHubConnector\\\\Connector\\:\\:get\\(\\)\\.$#"
+			count: 1
+			path: src/Data/Release.php
+
+		-
+			message: "#^Call to an undefined method ConduitUi\\\\GitHubConnector\\\\Connector\\:\\:patch\\(\\)\\.$#"
+			count: 1
+			path: src/Data/Release.php
+
+		-
+			message: "#^Call to an undefined method ConduitUi\\\\GitHubConnector\\\\Connector\\:\\:upload\\(\\)\\.$#"
+			count: 1
+			path: src/Data/Release.php
+
+		-
+			message: "#^Call to an undefined method ConduitUi\\\\GitHubConnector\\\\Connector\\:\\:delete\\(\\)\\.$#"
 			count: 1
 			path: src/Services/BranchQuery.php
 
@@ -61,13 +81,98 @@ parameters:
 			path: src/Services/BranchQuery.php
 
 		-
-			message: "#^Call to an undefined method ConduitUi\\\\GitHubConnector\\\\Connector\\:\\:delete\\(\\)\\.$#"
+			message: "#^Call to an undefined method ConduitUi\\\\GitHubConnector\\\\Connector\\:\\:get\\(\\)\\.$#"
 			count: 1
+			path: src/Services/CollaboratorQuery.php
+
+		-
+			message: "#^Method ConduitUI\\\\Repos\\\\Services\\\\CollaboratorQuery\\:\\:applyClientSideFilters\\(\\) has parameter \\$collection with generic class Illuminate\\\\Support\\\\Collection but does not specify its types\\: TKey, TValue$#"
+			count: 1
+			path: src/Services/CollaboratorQuery.php
+
+		-
+			message: "#^Method ConduitUI\\\\Repos\\\\Services\\\\CollaboratorQuery\\:\\:applyClientSideFilters\\(\\) return type with generic class Illuminate\\\\Support\\\\Collection does not specify its types\\: TKey, TValue$#"
+			count: 1
+			path: src/Services/CollaboratorQuery.php
+
+		-
+			message: "#^Method ConduitUI\\\\Repos\\\\Services\\\\CollaboratorQuery\\:\\:first\\(\\) should return ConduitUI\\\\Repos\\\\Data\\\\Collaborator\\|null but returns mixed\\.$#"
+			count: 1
+			path: src/Services/CollaboratorQuery.php
+
+		-
+			message: "#^Method ConduitUI\\\\Repos\\\\Services\\\\CollaboratorQuery\\:\\:get\\(\\) return type with generic class Illuminate\\\\Support\\\\Collection does not specify its types\\: TKey, TValue$#"
+			count: 1
+			path: src/Services/CollaboratorQuery.php
+
+		-
+			message: "#^Parameter \\#1 \\$callback of method Illuminate\\\\Support\\\\Collection\\<\\(int\\|string\\),mixed\\>\\:\\:filter\\(\\) expects \\(callable\\(mixed, int\\|string\\)\\: bool\\)\\|null, Closure\\(ConduitUI\\\\Repos\\\\Data\\\\Collaborator\\)\\: bool given\\.$#"
+			count: 1
+			path: src/Services/CollaboratorQuery.php
+
+		-
+			message: "#^Unable to resolve the template type TKey in call to function collect$#"
+			count: 1
+			path: src/Services/CollaboratorQuery.php
+
+		-
+			message: "#^Unable to resolve the template type TValue in call to function collect$#"
+			count: 1
+			path: src/Services/CollaboratorQuery.php
+
+		-
+			message: "#^Call to an undefined method ConduitUi\\\\GitHubConnector\\\\Connector\\:\\:delete\\(\\)\\.$#"
+			count: 2
+			path: src/Services/ReleaseQuery.php
+
+		-
+			message: "#^Call to an undefined method ConduitUi\\\\GitHubConnector\\\\Connector\\:\\:get\\(\\)\\.$#"
+			count: 3
+			path: src/Services/ReleaseQuery.php
+
+		-
+			message: "#^Call to an undefined method ConduitUi\\\\GitHubConnector\\\\Connector\\:\\:patch\\(\\)\\.$#"
+			count: 1
+			path: src/Services/ReleaseQuery.php
+
+		-
+			message: "#^Call to an undefined method ConduitUi\\\\GitHubConnector\\\\Connector\\:\\:post\\(\\)\\.$#"
+			count: 2
+			path: src/Services/ReleaseQuery.php
+
+		-
+			message: "#^Call to an undefined method ConduitUi\\\\GitHubConnector\\\\Connector\\:\\:upload\\(\\)\\.$#"
+			count: 1
+			path: src/Services/ReleaseQuery.php
+
+		-
+			message: "#^Method ConduitUI\\\\Repos\\\\Services\\\\ReleaseQuery\\:\\:first\\(\\) should return ConduitUI\\\\Repos\\\\Data\\\\Release\\|null but returns mixed\\.$#"
+			count: 1
+			path: src/Services/ReleaseQuery.php
+
+		-
+			message: "#^Method ConduitUI\\\\Repos\\\\Services\\\\ReleaseQuery\\:\\:get\\(\\) return type with generic class Illuminate\\\\Support\\\\Collection does not specify its types\\: TKey, TValue$#"
+			count: 1
+			path: src/Services/ReleaseQuery.php
+
+		-
+			message: "#^Unable to resolve the template type TKey in call to function collect$#"
+			count: 1
+			path: src/Services/ReleaseQuery.php
+
+		-
+			message: "#^Unable to resolve the template type TValue in call to function collect$#"
+			count: 1
+			path: src/Services/ReleaseQuery.php
+
+		-
+			message: "#^Call to an undefined method ConduitUi\\\\GitHubConnector\\\\Connector\\:\\:delete\\(\\)\\.$#"
+			count: 2
 			path: src/Services/Repositories.php
 
 		-
 			message: "#^Call to an undefined method ConduitUi\\\\GitHubConnector\\\\Connector\\:\\:get\\(\\)\\.$#"
-			count: 6
+			count: 7
 			path: src/Services/Repositories.php
 
 		-
@@ -77,6 +182,11 @@ parameters:
 
 		-
 			message: "#^Call to an undefined method ConduitUi\\\\GitHubConnector\\\\Connector\\:\\:post\\(\\)\\.$#"
+			count: 1
+			path: src/Services/Repositories.php
+
+		-
+			message: "#^Call to an undefined method ConduitUi\\\\GitHubConnector\\\\Connector\\:\\:put\\(\\)\\.$#"
 			count: 1
 			path: src/Services/Repositories.php
 
@@ -161,23 +271,78 @@ parameters:
 			path: tests/Unit/BranchQueryTest.php
 
 		-
+			message: "#^Access to an undefined property PHPUnit\\\\Framework\\\\TestCase\\:\\:\\$connector\\.$#"
+			count: 16
+			path: tests/Unit/CollaboratorQueryTest.php
+
+		-
+			message: "#^Access to an undefined property PHPUnit\\\\Framework\\\\TestCase\\:\\:\\$query\\.$#"
+			count: 16
+			path: tests/Unit/CollaboratorQueryTest.php
+
+		-
+			message: "#^Call to an undefined method Mockery\\\\ExpectationInterface\\|Mockery\\\\HigherOrderMessage\\:\\:andReturn\\(\\)\\.$#"
+			count: 15
+			path: tests/Unit/CollaboratorQueryTest.php
+
+		-
+			message: "#^Parameter \\#1 \\$github of class ConduitUI\\\\Repos\\\\Services\\\\CollaboratorQuery constructor expects ConduitUi\\\\GitHubConnector\\\\Connector, Mockery\\\\MockInterface given\\.$#"
+			count: 1
+			path: tests/Unit/CollaboratorQueryTest.php
+
+		-
+			message: "#^Access to an undefined property PHPUnit\\\\Framework\\\\TestCase\\:\\:\\$app\\.$#"
+			count: 1
+			path: tests/Unit/ReleaseActionsTest.php
+
+		-
+			message: "#^Access to an undefined property PHPUnit\\\\Framework\\\\TestCase\\:\\:\\$connector\\.$#"
+			count: 12
+			path: tests/Unit/ReleaseActionsTest.php
+
+		-
+			message: "#^Call to an undefined method Mockery\\\\ExpectationInterface\\|Mockery\\\\HigherOrderMessage\\:\\:andReturn\\(\\)\\.$#"
+			count: 11
+			path: tests/Unit/ReleaseActionsTest.php
+
+		-
+			message: "#^Access to an undefined property PHPUnit\\\\Framework\\\\TestCase\\:\\:\\$connector\\.$#"
+			count: 17
+			path: tests/Unit/ReleaseQueryTest.php
+
+		-
+			message: "#^Access to an undefined property PHPUnit\\\\Framework\\\\TestCase\\:\\:\\$query\\.$#"
+			count: 17
+			path: tests/Unit/ReleaseQueryTest.php
+
+		-
+			message: "#^Call to an undefined method Mockery\\\\ExpectationInterface\\|Mockery\\\\HigherOrderMessage\\:\\:andReturn\\(\\)\\.$#"
+			count: 16
+			path: tests/Unit/ReleaseQueryTest.php
+
+		-
+			message: "#^Parameter \\#1 \\$github of class ConduitUI\\\\Repos\\\\Services\\\\ReleaseQuery constructor expects ConduitUi\\\\GitHubConnector\\\\Connector, Mockery\\\\MockInterface given\\.$#"
+			count: 1
+			path: tests/Unit/ReleaseQueryTest.php
+
+		-
 			message: "#^Access to an undefined property PHPUnit\\\\Framework\\\\TestCase\\:\\:\\$app\\.$#"
 			count: 4
 			path: tests/Unit/ReposServiceProviderTest.php
 
 		-
 			message: "#^Access to an undefined property PHPUnit\\\\Framework\\\\TestCase\\:\\:\\$connector\\.$#"
-			count: 15
-			path: tests/Unit/RepositoriesServiceTest.php
-
-		-
-			message: "#^Access to an undefined property PHPUnit\\\\Framework\\\\TestCase\\:\\:\\$service\\.$#"
 			count: 20
 			path: tests/Unit/RepositoriesServiceTest.php
 
 		-
+			message: "#^Access to an undefined property PHPUnit\\\\Framework\\\\TestCase\\:\\:\\$service\\.$#"
+			count: 26
+			path: tests/Unit/RepositoriesServiceTest.php
+
+		-
 			message: "#^Call to an undefined method Mockery\\\\ExpectationInterface\\|Mockery\\\\HigherOrderMessage\\:\\:andReturn\\(\\)\\.$#"
-			count: 14
+			count: 19
 			path: tests/Unit/RepositoriesServiceTest.php
 
 		-
@@ -204,6 +369,26 @@ parameters:
 			message: "#^Unable to resolve the template type TValue in call to function expect$#"
 			count: 1
 			path: tests/Unit/RepositoryDataContractTest.php
+
+		-
+			message: "#^Access to an undefined property PHPUnit\\\\Framework\\\\TestCase\\:\\:\\$connector\\.$#"
+			count: 8
+			path: tests/Unit/RepositoryModelTest.php
+
+		-
+			message: "#^Access to an undefined property PHPUnit\\\\Framework\\\\TestCase\\:\\:\\$repositories\\.$#"
+			count: 1
+			path: tests/Unit/RepositoryModelTest.php
+
+		-
+			message: "#^Call to an undefined method Mockery\\\\ExpectationInterface\\|Mockery\\\\HigherOrderMessage\\:\\:andReturn\\(\\)\\.$#"
+			count: 5
+			path: tests/Unit/RepositoryModelTest.php
+
+		-
+			message: "#^Parameter \\#1 \\$github of class ConduitUI\\\\Repos\\\\Services\\\\Repositories constructor expects ConduitUi\\\\GitHubConnector\\\\Connector, Mockery\\\\MockInterface given\\.$#"
+			count: 1
+			path: tests/Unit/RepositoryModelTest.php
 
 		-
 			message: "#^Access to an undefined property PHPUnit\\\\Framework\\\\TestCase\\:\\:\\$connector\\.$#"
