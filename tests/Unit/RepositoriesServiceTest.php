@@ -377,3 +377,174 @@ it('can delete a branch', function () {
 
     expect($result)->toBeTrue();
 });
+
+it('can create a release query', function () {
+    $query = $this->service->releaseQuery('owner/test-repo');
+
+    expect($query)->toBeInstanceOf(\ConduitUI\Repos\Services\ReleaseQuery::class);
+});
+
+it('can find a release by id', function () {
+    $responseData = [
+        'id' => 123,
+        'tag_name' => 'v1.0.0',
+        'name' => 'Release 1.0.0',
+        'body' => 'First release',
+        'draft' => false,
+        'prerelease' => false,
+        'created_at' => '2024-01-01T00:00:00Z',
+        'published_at' => '2024-01-01T00:00:00Z',
+        'html_url' => 'https://github.com/owner/test-repo/releases/tag/v1.0.0',
+        'assets' => [],
+    ];
+
+    $response = m::mock(Response::class);
+    $response->shouldReceive('json')->andReturn($responseData);
+
+    $this->connector
+        ->shouldReceive('get')
+        ->with('/repos/owner/test-repo/releases/123')
+        ->andReturn($response);
+
+    $release = $this->service->findRelease('owner/test-repo', 123);
+
+    expect($release->id)->toBe(123);
+    expect($release->tagName)->toBe('v1.0.0');
+});
+
+it('can find a release by tag', function () {
+    $responseData = [
+        'id' => 1,
+        'tag_name' => 'v1.0.0',
+        'name' => 'Release 1.0.0',
+        'body' => 'First release',
+        'draft' => false,
+        'prerelease' => false,
+        'created_at' => '2024-01-01T00:00:00Z',
+        'published_at' => '2024-01-01T00:00:00Z',
+        'html_url' => 'https://github.com/owner/test-repo/releases/tag/v1.0.0',
+        'assets' => [],
+    ];
+
+    $response = m::mock(Response::class);
+    $response->shouldReceive('json')->andReturn($responseData);
+
+    $this->connector
+        ->shouldReceive('get')
+        ->with('/repos/owner/test-repo/releases/tags/v1.0.0')
+        ->andReturn($response);
+
+    $release = $this->service->findReleaseByTag('owner/test-repo', 'v1.0.0');
+
+    expect($release->tagName)->toBe('v1.0.0');
+});
+
+it('can get latest release', function () {
+    $responseData = [
+        'id' => 1,
+        'tag_name' => 'v1.0.0',
+        'name' => 'Release 1.0.0',
+        'body' => 'First release',
+        'draft' => false,
+        'prerelease' => false,
+        'created_at' => '2024-01-01T00:00:00Z',
+        'published_at' => '2024-01-01T00:00:00Z',
+        'html_url' => 'https://github.com/owner/test-repo/releases/tag/v1.0.0',
+        'assets' => [],
+    ];
+
+    $response = m::mock(Response::class);
+    $response->shouldReceive('json')->andReturn($responseData);
+
+    $this->connector
+        ->shouldReceive('get')
+        ->with('/repos/owner/test-repo/releases/latest')
+        ->andReturn($response);
+
+    $release = $this->service->latestRelease('owner/test-repo');
+
+    expect($release->tagName)->toBe('v1.0.0');
+});
+
+it('can create a release', function () {
+    $requestData = [
+        'tag_name' => 'v1.0.0',
+        'name' => 'Release 1.0.0',
+        'body' => 'First release',
+        'draft' => false,
+        'prerelease' => false,
+    ];
+
+    $responseData = [
+        'id' => 1,
+        'tag_name' => 'v1.0.0',
+        'name' => 'Release 1.0.0',
+        'body' => 'First release',
+        'draft' => false,
+        'prerelease' => false,
+        'created_at' => '2024-01-01T00:00:00Z',
+        'published_at' => '2024-01-01T00:00:00Z',
+        'html_url' => 'https://github.com/owner/test-repo/releases/tag/v1.0.0',
+        'assets' => [],
+    ];
+
+    $response = m::mock(Response::class);
+    $response->shouldReceive('json')->andReturn($responseData);
+
+    $this->connector
+        ->shouldReceive('post')
+        ->with('/repos/owner/test-repo/releases', $requestData)
+        ->andReturn($response);
+
+    $release = $this->service->createRelease('owner/test-repo', $requestData);
+
+    expect($release->tagName)->toBe('v1.0.0');
+    expect($release->name)->toBe('Release 1.0.0');
+});
+
+it('can update a release', function () {
+    $requestData = [
+        'name' => 'Updated Release 1.0.0',
+        'body' => 'Updated release notes',
+    ];
+
+    $responseData = [
+        'id' => 123,
+        'tag_name' => 'v1.0.0',
+        'name' => 'Updated Release 1.0.0',
+        'body' => 'Updated release notes',
+        'draft' => false,
+        'prerelease' => false,
+        'created_at' => '2024-01-01T00:00:00Z',
+        'published_at' => '2024-01-01T00:00:00Z',
+        'html_url' => 'https://github.com/owner/test-repo/releases/tag/v1.0.0',
+        'assets' => [],
+    ];
+
+    $response = m::mock(Response::class);
+    $response->shouldReceive('json')->andReturn($responseData);
+
+    $this->connector
+        ->shouldReceive('patch')
+        ->with('/repos/owner/test-repo/releases/123', $requestData)
+        ->andReturn($response);
+
+    $release = $this->service->updateRelease('owner/test-repo', 123, $requestData);
+
+    expect($release->name)->toBe('Updated Release 1.0.0');
+    expect($release->body)->toBe('Updated release notes');
+});
+
+it('can delete a release', function () {
+    $response = m::mock(Response::class);
+    $response->shouldReceive('successful')->andReturn(true);
+
+    $this->connector
+        ->shouldReceive('delete')
+        ->with('/repos/owner/test-repo/releases/123')
+        ->andReturn($response);
+
+    $result = $this->service->deleteRelease('owner/test-repo', 123);
+
+    expect($result)->toBeTrue();
+});

@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace ConduitUI\Repos\Facades;
 
+use ConduitUI\Repos\Data\Release;
 use ConduitUI\Repos\Data\Repository;
+use ConduitUI\Repos\Services\ReleaseQuery;
 use ConduitUI\Repos\Services\Repositories;
 use ConduitUI\Repos\Services\RepositoryQuery;
 use Illuminate\Support\Collection;
@@ -24,6 +26,13 @@ use Illuminate\Support\Facades\Facade;
  * @method static array topics(string $fullName)
  * @method static array languages(string $fullName)
  * @method static RepositoryQuery query()
+ * @method static ReleaseQuery releaseQuery(string $fullName)
+ * @method static Release findRelease(string $fullName, int $id)
+ * @method static Release findReleaseByTag(string $fullName, string $tag)
+ * @method static Release latestRelease(string $fullName)
+ * @method static Release createRelease(string $fullName, array $attributes)
+ * @method static Release updateRelease(string $fullName, int $id, array $attributes)
+ * @method static bool deleteRelease(string $fullName, int $id)
  *
  * @see Repositories
  */

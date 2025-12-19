@@ -140,4 +140,53 @@ final class Repositories implements RepositoryContract
 
         return (new BranchQuery($this->github, $owner, $repo))->delete($branchName);
     }
+
+    public function releaseQuery(string $fullName): ReleaseQuery
+    {
+        [$owner, $repo] = explode('/', $fullName, 2);
+
+        return new ReleaseQuery($this->github, $owner, $repo);
+    }
+
+    public function findRelease(string $fullName, int $id): Release
+    {
+        [$owner, $repo] = explode('/', $fullName, 2);
+
+        return (new ReleaseQuery($this->github, $owner, $repo))->find($id);
+    }
+
+    public function findReleaseByTag(string $fullName, string $tag): Release
+    {
+        [$owner, $repo] = explode('/', $fullName, 2);
+
+        return (new ReleaseQuery($this->github, $owner, $repo))->findByTag($tag);
+    }
+
+    public function latestRelease(string $fullName): Release
+    {
+        [$owner, $repo] = explode('/', $fullName, 2);
+
+        return (new ReleaseQuery($this->github, $owner, $repo))->latest();
+    }
+
+    public function createRelease(string $fullName, array $attributes): Release
+    {
+        [$owner, $repo] = explode('/', $fullName, 2);
+
+        return (new ReleaseQuery($this->github, $owner, $repo))->create($attributes);
+    }
+
+    public function updateRelease(string $fullName, int $id, array $attributes): Release
+    {
+        [$owner, $repo] = explode('/', $fullName, 2);
+
+        return (new ReleaseQuery($this->github, $owner, $repo))->update($id, $attributes);
+    }
+
+    public function deleteRelease(string $fullName, int $id): bool
+    {
+        [$owner, $repo] = explode('/', $fullName, 2);
+
+        return (new ReleaseQuery($this->github, $owner, $repo))->delete($id);
+    }
 }
