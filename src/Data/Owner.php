@@ -12,8 +12,7 @@ final readonly class Owner
         public string $type,
         public string $avatarUrl,
         public string $htmlUrl,
-    ) {
-    }
+    ) {}
 
     public static function fromArray(array $data): self
     {

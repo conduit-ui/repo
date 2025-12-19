@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-use ConduitUI\Repos\Data\Repository;
-use ConduitUI\Repos\Data\Owner;
 use ConduitUI\Repos\Data\License;
+use ConduitUI\Repos\Data\Owner;
+use ConduitUI\Repos\Data\Repository;
 
 it('can create a repository from array', function () {
     $data = [

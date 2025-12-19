@@ -12,8 +12,7 @@ final readonly class Permissions
         public bool $push,
         public bool $triage,
         public bool $pull,
-    ) {
-    }
+    ) {}
 
     public static function fromArray(array $data): self
     {

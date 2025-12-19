@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace ConduitUI\Repos\Facades;
 
 use ConduitUI\Repos\Data\Repository;
-use ConduitUI\Repos\Services\RepositoryQuery;
 use ConduitUI\Repos\Services\Repositories;
+use ConduitUI\Repos\Services\RepositoryQuery;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Facade;
 
