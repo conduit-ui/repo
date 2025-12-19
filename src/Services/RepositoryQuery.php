@@ -26,6 +26,14 @@ final class RepositoryQuery
 
     protected int $page = 1;
 
+    protected ?string $language = null;
+
+    protected ?int $starsGreaterThan = null;
+
+    protected ?int $forksGreaterThan = null;
+
+    protected ?int $limit = null;
+
     public function __construct(
         protected Connector $github,
     ) {
@@ -89,6 +97,60 @@ final class RepositoryQuery
         return $this;
     }
 
+    public function whereOwner(string $owner): self
+    {
+        return $this->user($owner);
+    }
+
+    public function whereType(string $type): self
+    {
+        return $this->type($type);
+    }
+
+    public function whereLanguage(string $language): self
+    {
+        $this->language = $language;
+
+        return $this;
+    }
+
+    public function whereStarsGreaterThan(int $count): self
+    {
+        $this->starsGreaterThan = $count;
+
+        return $this;
+    }
+
+    public function whereForksGreaterThan(int $count): self
+    {
+        $this->forksGreaterThan = $count;
+
+        return $this;
+    }
+
+    public function latest(): self
+    {
+        $this->sort = 'updated';
+        $this->direction = 'desc';
+
+        return $this;
+    }
+
+    public function oldest(): self
+    {
+        $this->sort = 'updated';
+        $this->direction = 'asc';
+
+        return $this;
+    }
+
+    public function limit(int $count): self
+    {
+        $this->limit = $count;
+
+        return $this;
+    }
+
     public function get(): Collection
     {
         $endpoint = $this->buildEndpoint();
@@ -96,8 +158,37 @@ final class RepositoryQuery
 
         $response = $this->github->get($endpoint, $params);
 
-        return collect($response->json())
+        $collection = collect($response->json())
             ->map(fn (array $repo) => Repository::fromArray($repo));
+
+        return $this->applyClientSideFilters($collection);
+    }
+
+    protected function applyClientSideFilters(Collection $collection): Collection
+    {
+        if ($this->language !== null) {
+            $collection = $collection->filter(
+                fn (Repository $repo) => $repo->language === $this->language
+            );
+        }
+
+        if ($this->starsGreaterThan !== null) {
+            $collection = $collection->filter(
+                fn (Repository $repo) => $repo->stargazersCount > $this->starsGreaterThan
+            );
+        }
+
+        if ($this->forksGreaterThan !== null) {
+            $collection = $collection->filter(
+                fn (Repository $repo) => $repo->forksCount > $this->forksGreaterThan
+            );
+        }
+
+        if ($this->limit !== null) {
+            $collection = $collection->take($this->limit);
+        }
+
+        return $collection->values();
     }
 
     protected function buildEndpoint(): string
