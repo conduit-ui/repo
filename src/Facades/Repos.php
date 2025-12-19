@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace ConduitUI\Repos\Facades;
 
 use ConduitUI\Repos\Data\Repository;
+use ConduitUI\Repos\Services\CollaboratorQuery;
 use ConduitUI\Repos\Services\Repositories;
 use ConduitUI\Repos\Services\RepositoryQuery;
 use Illuminate\Support\Collection;
@@ -24,6 +25,10 @@ use Illuminate\Support\Facades\Facade;
  * @method static array topics(string $fullName)
  * @method static array languages(string $fullName)
  * @method static RepositoryQuery query()
+ * @method static CollaboratorQuery collaboratorQuery(string $fullName)
+ * @method static bool addCollaborator(string $fullName, string $username, array $options = [])
+ * @method static bool removeCollaborator(string $fullName, string $username)
+ * @method static bool checkCollaborator(string $fullName, string $username)
  *
  * @see Repositories
  */

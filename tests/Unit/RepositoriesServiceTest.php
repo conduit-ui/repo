@@ -377,3 +377,79 @@ it('can delete a branch', function () {
 
     expect($result)->toBeTrue();
 });
+
+it('can create collaborator query', function () {
+    $query = $this->service->collaboratorQuery('owner/test-repo');
+
+    expect($query)->toBeInstanceOf(\ConduitUI\Repos\Services\CollaboratorQuery::class);
+});
+
+it('can add a collaborator', function () {
+    $response = m::mock(Response::class);
+    $response->shouldReceive('successful')->andReturn(true);
+
+    $this->connector
+        ->shouldReceive('put')
+        ->with('/repos/owner/test-repo/collaborators/newuser', ['permission' => 'push'])
+        ->andReturn($response);
+
+    $result = $this->service->addCollaborator('owner/test-repo', 'newuser', ['permission' => 'push']);
+
+    expect($result)->toBeTrue();
+});
+
+it('can add a collaborator with default permission', function () {
+    $response = m::mock(Response::class);
+    $response->shouldReceive('successful')->andReturn(true);
+
+    $this->connector
+        ->shouldReceive('put')
+        ->with('/repos/owner/test-repo/collaborators/newuser', [])
+        ->andReturn($response);
+
+    $result = $this->service->addCollaborator('owner/test-repo', 'newuser');
+
+    expect($result)->toBeTrue();
+});
+
+it('can remove a collaborator', function () {
+    $response = m::mock(Response::class);
+    $response->shouldReceive('successful')->andReturn(true);
+
+    $this->connector
+        ->shouldReceive('delete')
+        ->with('/repos/owner/test-repo/collaborators/olduser')
+        ->andReturn($response);
+
+    $result = $this->service->removeCollaborator('owner/test-repo', 'olduser');
+
+    expect($result)->toBeTrue();
+});
+
+it('can check if user is a collaborator', function () {
+    $response = m::mock(Response::class);
+    $response->shouldReceive('successful')->andReturn(true);
+
+    $this->connector
+        ->shouldReceive('get')
+        ->with('/repos/owner/test-repo/collaborators/existinguser')
+        ->andReturn($response);
+
+    $result = $this->service->checkCollaborator('owner/test-repo', 'existinguser');
+
+    expect($result)->toBeTrue();
+});
+
+it('returns false when user is not a collaborator', function () {
+    $response = m::mock(Response::class);
+    $response->shouldReceive('successful')->andReturn(false);
+
+    $this->connector
+        ->shouldReceive('get')
+        ->with('/repos/owner/test-repo/collaborators/nonexistentuser')
+        ->andReturn($response);
+
+    $result = $this->service->checkCollaborator('owner/test-repo', 'nonexistentuser');
+
+    expect($result)->toBeFalse();
+});
