@@ -4,10 +4,13 @@ declare(strict_types=1);
 
 namespace ConduitUI\Repos\Data;
 
+use ConduitUi\GitHubConnector\Connector;
 use DateTimeImmutable;
 
-final readonly class Release
+final class Release
 {
+    protected array $pendingChanges = [];
+
     public function __construct(
         public int $id,
         public string $tagName,
@@ -51,5 +54,105 @@ final readonly class Release
             'html_url' => $this->htmlUrl,
             'assets' => array_map(fn ($asset) => $asset->toArray(), $this->assets),
         ];
+    }
+
+    // Chainable action methods
+
+    public function publish(): self
+    {
+        return $this->updateAttributes(['draft' => false]);
+    }
+
+    public function markAsDraft(): self
+    {
+        return $this->updateAttributes(['draft' => true]);
+    }
+
+    public function markAsPrerelease(): self
+    {
+        return $this->updateAttributes(['prerelease' => true]);
+    }
+
+    public function markAsLatest(): self
+    {
+        return $this->updateAttributes(['make_latest' => 'true']);
+    }
+
+    public function rename(string $newName): self
+    {
+        return $this->updateAttributes(['name' => $newName]);
+    }
+
+    public function updateBody(string $body): self
+    {
+        return $this->updateAttributes(['body' => $body]);
+    }
+
+    public function update(array $attributes): self
+    {
+        return $this->updateAttributes($attributes);
+    }
+
+    // Persistence methods
+
+    public function delete(): bool
+    {
+        $connector = app(Connector::class);
+        $response = $connector->delete("/repos/*/releases/{$this->id}");
+
+        return $response->successful();
+    }
+
+    public function refresh(): self
+    {
+        $connector = app(Connector::class);
+        $response = $connector->get("/repos/*/releases/{$this->id}");
+
+        return self::fromArray($response->json());
+    }
+
+    // Asset management methods
+
+    public function uploadAsset(string $filePath, string $fileName, string $contentType): ReleaseAsset
+    {
+        $connector = app(Connector::class);
+        $response = $connector->upload("/repos/*/releases/{$this->id}/assets", $filePath, $fileName, $contentType);
+
+        return ReleaseAsset::fromArray($response->json());
+    }
+
+    public function deleteAsset(int $assetId): bool
+    {
+        $connector = app(Connector::class);
+        $response = $connector->delete("/repos/*/releases/assets/{$assetId}");
+
+        return $response->successful();
+    }
+
+    // Helper methods
+
+    public function isDraft(): bool
+    {
+        return $this->draft;
+    }
+
+    public function isPrerelease(): bool
+    {
+        return $this->prerelease;
+    }
+
+    public function isPublished(): bool
+    {
+        return ! $this->draft && $this->publishedAt !== null;
+    }
+
+    // Internal methods
+
+    protected function updateAttributes(array $attributes): self
+    {
+        $connector = app(Connector::class);
+        $response = $connector->patch("/repos/*/releases/{$this->id}", $attributes);
+
+        return self::fromArray($response->json());
     }
 }
