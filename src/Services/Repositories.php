@@ -182,4 +182,11 @@ final class Repositories implements RepositoryContract
 
         return $response->successful();
     }
+
+    public function files(string $fullName): FileQuery
+    {
+        [$owner, $repo] = explode('/', $fullName, 2);
+
+        return new FileQuery($this->github, $owner, $repo);
+    }
 }
