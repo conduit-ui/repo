@@ -156,29 +156,25 @@ final class ReleaseQuery
     {
         if ($this->excludeDrafts === true) {
             $releases = $releases->filter(
-                /** @param Release $release */
-                fn (Release $release) => ! $release->draft
+                fn (Release $release) => ! $release->draft,
             );
         }
 
         if ($this->draftsOnly === true) {
             $releases = $releases->filter(
-                /** @param Release $release */
-                fn (Release $release) => $release->draft
+                fn (Release $release) => $release->draft,
             );
         }
 
         if ($this->excludePrereleases === true) {
             $releases = $releases->filter(
-                /** @param Release $release */
-                fn (Release $release) => ! $release->prerelease
+                fn (Release $release) => ! $release->prerelease,
             );
         }
 
         if ($this->prereleasesOnly === true) {
             $releases = $releases->filter(
-                /** @param Release $release */
-                fn (Release $release) => $release->prerelease
+                fn (Release $release) => $release->prerelease,
             );
         }
 

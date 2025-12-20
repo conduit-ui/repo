@@ -489,3 +489,9 @@ it('can update collaborator permission', function () {
 
     expect($result)->toBeTrue();
 });
+
+it('can create a file query', function () {
+    $query = $this->service->files('owner/test-repo');
+
+    expect($query)->toBeInstanceOf(\ConduitUI\Repos\Services\FileQuery::class);
+});
